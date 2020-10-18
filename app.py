@@ -23,7 +23,7 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key=True,autoincrement=True)
     username = db.Column(db.String(200))
     email = db.Column(db.String(200))
-    password = db.Column(db.String(500))
+    password = db.Column(db.String(300))
 
 
 @login_manager.user_loader
@@ -47,7 +47,7 @@ def not_found(error):
   
 #We can also implement checks and error handling for login and reset.
 # ***NOT IMPLEMENTING IT RIGHT NOW*** #
-@app.route('/pridict',methods=['GET'])
+@app.route('/home',methods=['GET'])
 @login_required
 def get_home():
     return render_template('index.html',username=current_user.username)
@@ -74,7 +74,7 @@ def login_post():
         flash('Please check your login credentials.')
         return redirect('/')
     login_user(user)
-    return redirect('/pridict')
+    return redirect('/home')
 
 @app.route('/signup',methods=['POST'])
 def signup_post():
@@ -96,6 +96,8 @@ def signup_post():
 def logout():
     logout_user()
     return redirect('/')
+
+
 if __name__=='__main__':
     app.run(debug=True)
 
